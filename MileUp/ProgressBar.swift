@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProgressBar: View {
     @Binding var progress: Float
-    var colour: Color = Color.blue
+    var colour: Color = Color.accentColor
     
     let arcSpan: CGFloat = 2.0 / 3.0
     var startAngle: Angle {

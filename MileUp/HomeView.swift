@@ -11,7 +11,13 @@ struct HomeView: View {
     @State private var progressValue: Float = 0.0
     @State private var totalDrives: Int = 32
     @State private var totalTime: Double = 2.5
-    @State private var driveAverage: Double = 0.0
+    @State private var averageDistance: Double = 0.0
+    @State private var averageTime: Double = 0.0
+    
+    private let columns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16)
+    ]
     
     var body: some View {
         VStack {
@@ -34,62 +40,47 @@ struct HomeView: View {
                 .offset(y: 60)
             }
             
-            HStack {
-                VStack(alignment: .leading, spacing: 15) {
-                    HStack {
-                        Image(systemName: "car.side")
-                        
-                        Text("Total Drives:")
+            LazyVGrid(columns: columns, alignment: .leading, spacing: 1) {
+                StatCard(
+                    icon: "car.side",
+                    title: "Total Drives:",
+                    valueView: {
+                        Text("\(totalDrives)")
                     }
-                    
-                    Text("\(totalDrives)")
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color(UIColor.systemBackground))
-                        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 3)
-                        .frame(width: 160, height: 80)
                 )
-                .padding(.horizontal)
                 
-                VStack(alignment: .leading, spacing: 15) {
-                    HStack {
-                        Image(systemName: "clock")
-                        
-                        Text("Total Time:")
+                StatCard(
+                    icon: "clock",
+                    title: "Total Time:",
+                    valueView: {
+                        Text("\(Int(totalTime))h \((totalTime - totalTime.rounded(.towardZero)) * 60, specifier: "%.0f")m")
                     }
-                    
-                    Text("\(Int(totalTime))h \((totalTime - totalTime.rounded(.towardZero)) * 60, specifier: "%.0f")m")
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color(UIColor.systemBackground))
-                        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 3)
-                        .frame(width: 160, height: 80)
                 )
-                .padding(.horizontal)
-            }
-            
-            HStack{
-                VStack(alignment: .leading, spacing: 15) {
-                    HStack {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
-                        
-                        Text("Avg per drive:")
+                
+                StatCard(
+                    icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
+                    title: "Avg distance:",
+                    valueView: {
+                        Text("\(averageDistance, specifier: "%.1f") mi")
                     }
-                    
-                    Text("\(driveAverage, specifier: "%.1f") mi")
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color(UIColor.systemBackground))
-                        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 3)
                 )
-                .padding(.horizontal)
+                
+                StatCard(
+                    icon: "chart.line.uptrend.xyaxis",
+                    title: "Avg time:",
+                    valueView: {
+                        Text("\(Int(averageTime))h \((averageTime - averageTime.rounded(.towardZero)) * 60, specifier: "%.0f")m")
+                    }
+                )
             }
+            .padding(.horizontal)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .safeAreaPadding(.top)
+        .safeAreaInset(edge: .bottom) {
+            StartDriveButton()
+                .padding(.horizontal)
+                .padding(.vertical, 30)
         }
     }
 }
