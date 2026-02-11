@@ -42,7 +42,7 @@ struct HomeView: View {
             
             LazyVGrid(columns: columns, alignment: .leading, spacing: 1) {
                 StatCard(
-                    icon: "car.side",
+                    icon: "car",
                     title: "Total Drives:",
                     valueView: {
                         Text("\(totalDrives)")
@@ -50,7 +50,7 @@ struct HomeView: View {
                 )
                 
                 StatCard(
-                    icon: "clock",
+                    icon: "timer",
                     title: "Total Time:",
                     valueView: {
                         Text("\(Int(totalTime))h \((totalTime - totalTime.rounded(.towardZero)) * 60, specifier: "%.0f")m")
@@ -58,7 +58,7 @@ struct HomeView: View {
                 )
                 
                 StatCard(
-                    icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
+                    icon: "map",
                     title: "Avg distance:",
                     valueView: {
                         Text("\(averageDistance, specifier: "%.1f") mi")
