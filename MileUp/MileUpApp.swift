@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct MileUpApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            ContentView()
         }
+        .modelContainer(for: [Drive.self, RoutePoint.self])
     }
 }
